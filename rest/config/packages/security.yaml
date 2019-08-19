@@ -1,7 +1,15 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        users:
+            entity:
+                class: 'App\Entity\User'
+                property: 'email'
+
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -15,11 +23,16 @@ security:
 
         main:
             pattern: ^/
-            form_login:
-                check_path: login  # name to check_path route
-                login_path: login    # name to login_path route
-            logout: true
-            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\GoogleAuthenticator
+#            form_login:
+#                check_path: login  # name to check_path route
+#                login_path: login    # name to login_path route
+            logout:
+                path: /logout
+                target: /
+            anonymous: ~
 
         oauth_token:
             pattern: ^/oauth/v2/token

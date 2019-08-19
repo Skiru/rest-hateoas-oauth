@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1> Welcome to ECorp site</h1>
+
+    {% if app.user %}
+        <h1> </h1>Hello {{ app.user.firstName }} {{ app.user.lastName }}!</h1>
+        <img src="{{ app.user.avatarUri }}" alt="user_image">
+
+        <ul>
+            <li>Your email: {{ app.user.email }}</li>
+        </ul>
+
+        <a href="{{ path('logout') }}">
+            Logout
+        </a>
+
+    {% else %}
+        <a href="{{ path('connect_google_start') }}">
+            Log in with Google
+        </a>
+    {% endif %}
+
+{% endblock %}

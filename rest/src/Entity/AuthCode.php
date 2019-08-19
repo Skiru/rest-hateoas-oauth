@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\OAuthServerBundle\Entity\AuthCode as BaseAuthCode;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity
@@ -11,9 +12,12 @@ use FOS\OAuthServerBundle\Entity\AuthCode as BaseAuthCode;
 class AuthCode extends BaseAuthCode
 {
     /**
+     * @var UuidInterface
+     *
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     protected $id;
 
